@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+    <vote_yes>6</vote_yes>
+    <vote_no>10</vote_no>
+    <vote_random>24</vote_random>
+    <member>
+        <user_id>12345</user_id>
+        <username>kuku</username>
+        <vote_date>2018-11-17 11:30:00</vote_date>
+    </member>
+    <member>
+        <user_id>678910</user_id>
+        <username>shushu</username>
+        <vote_date>2018-11-17 15:15:00</vote_date>
+    </member>
+</users>

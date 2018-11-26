@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {
+            "tools\\": "library/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true
+    }
+}
