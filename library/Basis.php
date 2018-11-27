@@ -6,8 +6,9 @@ use tools\AppException;
 
 class Basis
 {
-    protected $ask;   // интерфейс для обращения к url
-    public    $come;  // обновления от бота
+    protected $ask;          // интерфейс для обращения к url
+    public    $come;         // обновления от бота
+    public    $updType = ''; // 'callback_query' или 'message'
 
     public function __construct(AskInterface $ask) {
         $this->ask = $ask;
@@ -17,7 +18,7 @@ class Basis
         if (!$apiMethod) {
             throw new AppException(__METHOD__." Не определён API метод для этого запоса.");
         }
-        $url = \sprintf('%s%s%s%s', Fix::API_URL, Fix::TOKEN, '/', $apiMethod);
+        $url = \sprintf('%s%s/%s', Fix::API_URL, Fix::TOKEN, $apiMethod);
         try {
             $reply = $this->ask->getContents($url, $params);
         } catch (AppException $e) {
@@ -26,7 +27,7 @@ class Basis
         $replyObj = json_decode($reply, false);
         if (isset($replyObj->ok)) {
             if (false === $replyObj->ok) {
-                $s = \sprintf('%s%s%s', '--- FALSE ответ от API ---', "\r\n", $reply);
+                $s = \sprintf("--- FALSE ответ от API ---\r\n%s", $reply);
                 throw new AppException(__METHOD__.$s);
             }
         }
@@ -42,10 +43,16 @@ class Basis
              */
         } 
         if (is_object($this->come) || is_array($this->come)) {
+            if (isset($this->come->message)) {
+                $this->updType = Fix::MSG;
+            }
+            if (isset($this->come->callback_query)) {
+                $this->updType =  Fix::CBQ;
+            } 
             return $this;
         } else {
             $this->come = null;
-            $content = \sprintf('%s%s%s', ' --- Неожиданное обновление ---', "\r\n", $content);
+            $content = \sprintf("--- Неожиданное обновление ---\r\n%s", $content);
             throw new AppException(__METHOD__.$content);
         }
     }
@@ -55,29 +62,69 @@ class Basis
             return;
         }
         $path = \filter_input(\INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_SPECIAL_CHARS).Fix::LOG_FILE;
-        $format = '%s %s%s';
-        $s = sprintf($format, date("Y-m-d H:i:s"), $str, "\r\n");
+        $format = "%s %s\r\n";
+        $s = sprintf($format, date("Y-m-d H:i:s"), $str);
         \file_put_contents($path, $s, \FILE_APPEND);
     }
     
     public function getChatId() {
-        if (isset($this->come->callback_query)) {
-            return $this->come->callback_query->message->chat->id;
+        if ($this->updType ===  Fix::MSG) {
+            if (isset($this->come->message->chat->id)) {
+                return $this->come->message->chat->id;
+            }
         }
-        if (isset($this->come->message)) {
-            return $this->come->message->chat->id;
+        if ($this->updType ===  Fix::CBQ) {
+            if (isset($this->come->callback_query->message->chat->id)) {
+                return $this->come->callback_query->message->chat->id;
+            }
         }
         return null;
     }
     public function getUserId() {
-        if (isset($this->come->callback_query)) {
-            return $this->come->callback_query->from->id;
-        }
-        if (isset($this->come->message)) {
-            return $this->come->message->from->id;
+        if (isset($this->come->{$this->updType}->from->id)) {
+            return $this->come->{$this->updType}->from->id;
         }
         return null;
     }
 
+    public function getText() {
+        if ($this->updType ===  Fix::MSG) {
+            return $this->come->message->text;
+        }
+        return null;
+    }
+
+    public function isBotCommand() {
+        if ($this->come->message->entities[0]->type === "bot_command") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getCbqData() {
+        return $this->come->callback_query->data;
+    }
+
+    public function getChatType() {
+        if ($this->updType ===  Fix::MSG) {
+           return $this->come->message->chat->type; 
+        }
+        return null;
+    }
+    
+    public function getFirstName() {
+       if (isset($this->come->message->chat->first_name)) {
+           return $this->come->message->chat->first_name;
+        }
+        return null;
+    }
+    
+    public function getUsername() {
+        if (isset($this->come->{$this->updType}->from->username)) {
+            return $this->come->{$this->updType}->from->username;
+        }
+        return null;
+    }
 }
 

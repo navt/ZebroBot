@@ -13,11 +13,11 @@ class TextController extends BaseController {
     }
 
     public function index() {
-        if ($this->basis->come->message->chat->type === "private") {
+        if ($this->basis->getChatType() === "private") {
             $text = '';
             $tp2 = "Этот бот не умеет отвечать на произвольный текст!";
-            if (isset($this->basis->come->message->chat->first_name)) {
-               $first_name = $this->basis->come->message->chat->first_name;
+            $first_name = $this->basis->getFirstName();
+            if ($first_name !== null) {
                $text = "{$first_name}!\n".$tp2 ;
             }
             if ($text === '') {

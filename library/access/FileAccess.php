@@ -65,11 +65,7 @@ class FileAccess implements DataAccess
         echo __METHOD__."\n";
         if (is_object($this->dataObject)) {
             foreach ($this->dataObject->member as $member) {
-                var_dump($member->user_id);
-                var_dump($user_id); 
-                echo "\n";
                 if ((integer)$member->user_id === (integer)$user_id) {
-                    echo "TRUE \n";
                     return true;
                 }
             }
@@ -81,12 +77,7 @@ class FileAccess implements DataAccess
         if (is_object($this->dataObject)) {
             $member = $this->dataObject->addChild('member');
             $member->addChild('user_id', $this->basis->getUserId());
-            if ($type === 'message') {
-                $member->addChild('username', $this->basis->come->message->from->username); 
-            }
-            if ($type === 'callback_query') {
-                $member->addChild('username', $this->basis->come->callback_query->from->username); 
-            }
+            $member->addChild('username', $this->basis->getUsername()); 
             $member->addChild('vote_date', date('Y-m-d H:i:s'));
             $this->saveChange();
         }
