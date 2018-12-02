@@ -9,8 +9,9 @@ class Fix
     const  MSG      = 'message';
     const  CBQ      = 'callback_query';
 
+    const LOG_ON    = true;
     
     const LOG_FILE  = '/botdir/data/log.txt';
-    const LOG_ON    = true;
     const DATA_FILE = '/botdir/data/votes.xml';
+    const SQLITE_FILE = '/botdir/data/bot-data.sqlite';
 }

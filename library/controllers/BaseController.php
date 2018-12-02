@@ -16,9 +16,8 @@ abstract class BaseController
     abstract function index();
     
     protected function alreadyVoted() {
-        $user_id = $this->basis->getUserId();
         $this->DA->initAccess();
-        if ($this->DA->findMember($user_id)) {
+        if ($this->DA->findMember()) {
             // человек уже голосовал
             $params = ["chat_id" => $this->basis->getChatId(),
                 "text" => "Голосовать несколько раз - против правил."];

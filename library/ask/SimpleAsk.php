@@ -25,10 +25,10 @@ class SimpleAsk implements AskInterface{
             $queryString = '';
         }
         if (\is_string($this->params)){
-            $queryString = \sprintf('%s%s', '?', $this->params);
+            $queryString = \sprintf('?%s', $this->params);
         }
         if (is_array($this->params)){
-            $queryString = \sprintf('%s%s', '?', http_build_query($this->params));
+            $queryString = \sprintf('?%s', http_build_query($this->params));
         }
         $address = \sprintf('%s%s', $this->url, $queryString);
         

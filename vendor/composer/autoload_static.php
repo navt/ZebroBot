@@ -28,6 +28,7 @@ class ComposerStaticInit3997cfb8efad9e487f40b8f76432026b
         'tools\\WebHook' => __DIR__ . '/../..' . '/library/WebHook.php',
         'tools\\access\\DataAccess' => __DIR__ . '/../..' . '/library/access/DataAccess.php',
         'tools\\access\\FileAccess' => __DIR__ . '/../..' . '/library/access/FileAccess.php',
+        'tools\\access\\SQLiteAccess' => __DIR__ . '/../..' . '/library/access/SQLiteAccess.php',
         'tools\\ask\\AskInterface' => __DIR__ . '/../..' . '/library/ask/AskInterface.php',
         'tools\\ask\\SimpleAsk' => __DIR__ . '/../..' . '/library/ask/SimpleAsk.php',
         'tools\\controllers\\BaseController' => __DIR__ . '/../..' . '/library/controllers/BaseController.php',

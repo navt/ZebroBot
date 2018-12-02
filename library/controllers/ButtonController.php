@@ -26,10 +26,23 @@ class ButtonController extends BaseController
     }
     
     private function addCount($args) {
-        if ($this->alreadyVoted()) {
+        if ($this->alreadyVoted() === true) {
             return;
         }
         $this->DA->addCount($args[0]);
-        $this->DA->addMember('callback_query');
+        $this->DA->addMember();
+
+        $text = "Благодарим за участие в опросе!";
+        $params = ["chat_id" => $this->chat_id,
+            "text" => $text];
+        $this->basis->request("sendMessage", $params);
+
+        // inline клавиатура больше не нужна
+        $message_id = $this->basis->getMessageId();
+        $params = ["chat_id" => $this->chat_id,
+            "message_id" => $message_id,
+            "reply_markup" => ''];
+        $this->basis->request("editMessageReplyMarkup", $params);
+      
     }
 }

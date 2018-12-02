@@ -44,6 +44,9 @@ class TextController extends BaseController {
             case '/result':
                 $this->result();
                 break;
+            case '/comment':
+                $this->comment();
+                break;
             default:
                 $params = ["chat_id" => $this->chat_id,
                     "text" => "Команда {$cmd} не поддерживается."];
@@ -90,6 +93,9 @@ class TextController extends BaseController {
             $this->basis->request("sendMessage", $params);
         }
     }
-
+    
+    private function comment() {
+        
+    }
 }
 

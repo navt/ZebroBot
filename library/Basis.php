@@ -66,7 +66,7 @@ class Basis
         $s = sprintf($format, date("Y-m-d H:i:s"), $str);
         \file_put_contents($path, $s, \FILE_APPEND);
     }
-    
+    // Геттеры
     public function getChatId() {
         if ($this->updType ===  Fix::MSG) {
             if (isset($this->come->message->chat->id)) {
@@ -80,16 +80,52 @@ class Basis
         }
         return null;
     }
+    
+    public function getChatType() {
+        if ($this->updType ===  Fix::MSG) {
+            if (isset($this->come->message->chat->type)) {
+                return $this->come->message->chat->type;
+            }
+        }
+        if ($this->updType ===  Fix::CBQ) {
+            if (isset($this->come->callback_query->message->chat->type)) {
+                return $this->come->callback_query->message->chat->type;
+            }
+             
+        }
+        return null;
+    }
+    
     public function getUserId() {
         if (isset($this->come->{$this->updType}->from->id)) {
             return $this->come->{$this->updType}->from->id;
         }
         return null;
     }
-
+    public function getFirstName() {
+       if (isset($this->come->{$this->updType}->from->first_name)) {
+           return $this->come->{$this->updType}->from->first_name;
+        }
+        return null;
+    }
+    
+    public function getUsername() {
+        if (isset($this->come->{$this->updType}->from->username)) {
+            return $this->come->{$this->updType}->from->username;
+        }
+        return null;
+    }
+    
     public function getText() {
         if ($this->updType ===  Fix::MSG) {
-            return $this->come->message->text;
+            if (isset($this->come->message->text)) {
+                return $this->come->message->text;
+            }
+        }
+        if ($this->updType ===  Fix::CBQ) {
+            if (isset($this->come->callback_query->message->text)) {
+                return $this->come->callback_query->message->text;
+            }
         }
         return null;
     }
@@ -106,25 +142,17 @@ class Basis
         return $this->come->callback_query->data;
     }
 
-    public function getChatType() {
+    public function getMessageId() {
         if ($this->updType ===  Fix::MSG) {
-           return $this->come->message->chat->type; 
+            if (isset($this->come->message->message_id)) {
+                return $this->come->message->message_id;
+            }
+        }
+        if ($this->updType ===  Fix::CBQ) {
+            if (isset($this->come->callback_query->message->message_id)) {
+                return $this->come->callback_query->message->message_id;
+            }
         }
         return null;
-    }
-    
-    public function getFirstName() {
-       if (isset($this->come->message->chat->first_name)) {
-           return $this->come->message->chat->first_name;
-        }
-        return null;
-    }
-    
-    public function getUsername() {
-        if (isset($this->come->{$this->updType}->from->username)) {
-            return $this->come->{$this->updType}->from->username;
-        }
-        return null;
-    }
+    }    
 }
-

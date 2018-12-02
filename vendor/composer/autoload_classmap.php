@@ -13,6 +13,7 @@ return array(
     'tools\\WebHook' => $baseDir . '/library/WebHook.php',
     'tools\\access\\DataAccess' => $baseDir . '/library/access/DataAccess.php',
     'tools\\access\\FileAccess' => $baseDir . '/library/access/FileAccess.php',
+    'tools\\access\\SQLiteAccess' => $baseDir . '/library/access/SQLiteAccess.php',
     'tools\\ask\\AskInterface' => $baseDir . '/library/ask/AskInterface.php',
     'tools\\ask\\SimpleAsk' => $baseDir . '/library/ask/SimpleAsk.php',
     'tools\\controllers\\BaseController' => $baseDir . '/library/controllers/BaseController.php',

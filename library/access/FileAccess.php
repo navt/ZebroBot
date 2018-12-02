@@ -23,7 +23,6 @@ class FileAccess implements DataAccess
     }
 
     public function initAccess() {
-        echo __METHOD__."\n";
         if (isset($this->file)) {
             $this->dataObject = simplexml_load_file($this->file);
         } 
@@ -61,8 +60,8 @@ class FileAccess implements DataAccess
         return $this;
     }
     
-    public function findMember($user_id) {
-        echo __METHOD__."\n";
+    public function findMember() {
+        $user_id = $this->basis->getUserId();
         if (is_object($this->dataObject)) {
             foreach ($this->dataObject->member as $member) {
                 if ((integer)$member->user_id === (integer)$user_id) {
@@ -73,7 +72,7 @@ class FileAccess implements DataAccess
         return false;
     }
     
-    public function addMember($type='message') {
+    public function addMember() {
         if (is_object($this->dataObject)) {
             $member = $this->dataObject->addChild('member');
             $member->addChild('user_id', $this->basis->getUserId());
