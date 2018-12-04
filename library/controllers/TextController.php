@@ -9,7 +9,7 @@ class TextController extends BaseController {
     
     public function __construct(\tools\Basis $basis, \tools\access\DataAccess $DA) {
         parent::__construct($basis, $DA);
-        $this->chat_id = $this->basis->getChatId();
+        $this->chat_id = (integer)$this->basis->getChatId();
     }
 
     public function index() {
@@ -46,6 +46,9 @@ class TextController extends BaseController {
                 break;
             case '/comment':
                 $this->comment();
+                break;
+            case '/addcomment':
+                $this->addComment();
                 break;
             default:
                 $params = ["chat_id" => $this->chat_id,
@@ -84,7 +87,6 @@ class TextController extends BaseController {
     }
     
     private function result() {
-        $this->DA->initAccess();
         $counts = $this->DA->getCounts();
         if (is_array($counts)) {
             $text ="Ответили:\nДа - {$counts['vote_yes']}\nНет - {$counts['vote_no']}\nНе уверен - {$counts['vote_random']}\n";
@@ -95,7 +97,18 @@ class TextController extends BaseController {
     }
     
     private function comment() {
+        $command = '/addcomment';
+        $this->DA->inStack($command);
         
+        $text = "Введите свой комментарий.";
+        $params = ["chat_id" => $this->chat_id,
+                "text" => $text];
+        $this->basis->request("sendMessage", $params);
+    }
+    
+    private function addComment() {
+        $comment = $this->basis->getText();
+        $this->DA->joinComment($comment);
     }
 }
 

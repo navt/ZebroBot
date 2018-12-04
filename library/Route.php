@@ -24,12 +24,17 @@ class Route
            $this->basis->webhookUpdate(false); 
         } catch (AppException $e) {
             $this->basis->toLog($e->getMessage());
+            exit;
         }
         /* --- отладка ---
         $str = 'сюда стоку json';
         $this->basis->come = json_decode($str, false);
         var_dump($this->basis->come);
          */
+        // был ли уже здесь данный юзер?
+        if ($this->DA->findMember() === false) {
+            $this->DA->addMember();      // добавляем
+        }
         if ($this->basis->updType ===  Fix::MSG) {
             // это текстовое сообщение или кнопка
             $this->parsingMessage();
@@ -46,10 +51,15 @@ class Route
 
         if ($text !== '') {
             if ($this->basis->isBotCommand()) { 
-                $this->controller->commands($text); // это какая-то команда
+                $this->controller->commands($text);    // это какая-то команда
+                exit;
+            }
+            $command = $this->DA->awaitingAction();
+            if ($command !== false) {
+                $this->controller->commands($command); // эта команда из стека
             } else {
-                $this->controller->index();         // это текст
-            } 
+                $this->controller->index();            // это текст
+            }
         }
     }
     
@@ -62,4 +72,5 @@ class Route
             $this->controller->commuter($call);
         }
     }
+
 }

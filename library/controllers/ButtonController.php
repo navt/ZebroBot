@@ -10,7 +10,7 @@ class ButtonController extends BaseController
     
     public function __construct(\tools\Basis $basis, \tools\access\DataAccess $DA) {
         parent::__construct($basis, $DA);
-        $this->chat_id = $this->basis->getChatId();
+        $this->chat_id = (integer)$this->basis->getChatId();
     }
     
     public function index() {}
@@ -30,7 +30,7 @@ class ButtonController extends BaseController
             return;
         }
         $this->DA->addCount($args[0]);
-        $this->DA->addMember();
+        $this->DA->addVote($args[0]);
 
         $text = "Благодарим за участие в опросе!";
         $params = ["chat_id" => $this->chat_id,

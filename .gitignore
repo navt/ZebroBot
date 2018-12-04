@@ -1,2 +1,4 @@
 /utility/*
 /nbproject/*
+/botdir/data/votes.xml
+/library/access/FileAccess.php

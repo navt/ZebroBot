@@ -67,6 +67,10 @@ class Basis
         \file_put_contents($path, $s, \FILE_APPEND);
     }
     // Геттеры
+    public function getUpdateId() {
+        return $this->come->update_id;
+    }
+    
     public function getChatId() {
         if ($this->updType ===  Fix::MSG) {
             if (isset($this->come->message->chat->id)) {
