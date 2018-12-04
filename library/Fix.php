@@ -5,7 +5,7 @@ namespace tools;
 class Fix 
 {
     const API_URL   = "https://api.telegram.org/bot";
-    const TOKEN     = "669836088:AAF6iAztFXzlBff58fAF-ATxfX-P7O0b_m8";
+    const TOKEN     = "ваш токен";
     const  MSG      = 'message';
     const  CBQ      = 'callback_query';
 
