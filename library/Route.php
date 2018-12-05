@@ -12,7 +12,6 @@ class Route
     private  $DA;
     private  $controller; 
 
-
     public function __construct(Basis $basis, DataAccess $DA) {
         $this->basis = $basis;
         $this->DA = $DA;
@@ -26,11 +25,7 @@ class Route
             $this->basis->toLog($e->getMessage());
             exit;
         }
-        /* --- отладка ---
-        $str = 'сюда стоку json';
-        $this->basis->come = json_decode($str, false);
-        var_dump($this->basis->come);
-         */
+
         // был ли уже здесь данный юзер?
         if ($this->DA->findMember() === false) {
             $this->DA->addMember();      // добавляем

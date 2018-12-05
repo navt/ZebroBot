@@ -7,7 +7,7 @@ use tools\AppException;
 class Basis
 {
     protected $ask;          // интерфейс для обращения к url
-    public    $come;         // обновления от бота
+    protected $come;         // обновления от бота
     public    $updType = ''; // 'callback_query' или 'message'
 
     public function __construct(AskInterface $ask) {
@@ -38,9 +38,6 @@ class Basis
         $content = file_get_contents("php://input");
         if (\is_string($content)) { 
             $this->come = \json_decode($content, $assoc);
-            /*
-            $this->toLog("--- Боту пришла строка JSON ---\n".$content);
-             */
         } 
         if (is_object($this->come) || is_array($this->come)) {
             if (isset($this->come->message)) {

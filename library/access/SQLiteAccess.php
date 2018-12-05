@@ -13,7 +13,7 @@ class SQLiteAccess implements DataAccess{
     
     public function __construct(Basis $basis) {
         $this->basis = $basis;
-        $f = \filter_input(\INPUT_SERVER, 'DOCUMENT_ROOT').Fix::SQLITE_FILE;
+        $f = \filter_input(\INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_SPECIAL_CHARS).Fix::SQLITE_FILE;
         try {
             if (file_exists($f)) {
                 $this->DB = new \SQLite3($f);
