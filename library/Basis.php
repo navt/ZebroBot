@@ -58,7 +58,7 @@ class Basis
         if (Fix::LOG_ON !== true) {
             return;
         }
-        $path = \filter_input(\INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_SPECIAL_CHARS).Fix::LOG_FILE;
+        $path = \getenv('DOCUMENT_ROOT').Fix::LOG_FILE;
         $format = "%s %s\r\n";
         $s = sprintf($format, date("Y-m-d H:i:s"), $str);
         \file_put_contents($path, $s, \FILE_APPEND);
