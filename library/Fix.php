@@ -11,6 +11,7 @@ class Fix
 
     const LOG_ON    = true;
     
+    const LIB_DIR   = __DIR__;
     const LOG_FILE  = '/botdir/data/log.txt';
     const SQLITE_FILE = '/botdir/data/bot-data.sqlite';
 }

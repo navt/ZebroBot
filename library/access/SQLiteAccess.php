@@ -13,7 +13,7 @@ class SQLiteAccess implements DataAccess{
     
     public function __construct(Basis $basis) {
         $this->basis = $basis;
-        $f = \getenv('DOCUMENT_ROOT').Fix::SQLITE_FILE;
+        $f = \dirname(Fix::LIB_DIR).Fix::SQLITE_FILE;
         try {
             if (file_exists($f)) {
                 $this->DB = new \SQLite3($f);

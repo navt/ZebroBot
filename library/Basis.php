@@ -58,7 +58,7 @@ class Basis
         if (Fix::LOG_ON !== true) {
             return;
         }
-        $path = \getenv('DOCUMENT_ROOT').Fix::LOG_FILE;
+        $path = \dirname(Fix::LIB_DIR).Fix::LOG_FILE;
         $format = "%s %s\r\n";
         $s = sprintf($format, date("Y-m-d H:i:s"), $str);
         \file_put_contents($path, $s, \FILE_APPEND);

@@ -4,10 +4,8 @@ use tools\Basis;
 use tools\access\SQLiteAccess;
 use tools\Route;
 
-$basePath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
-define("BASE_PATH", $basePath);
-
-require BASE_PATH.'vendor/autoload.php';
+$basePath = dirname(dirname(__FILE__));
+require $basePath.'/vendor/autoload.php';
 
 $ask   = new SimpleAsk();
 $basis = new Basis($ask);
